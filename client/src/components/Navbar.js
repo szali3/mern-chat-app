@@ -1,7 +1,19 @@
 import styled from "@emotion/styled";
-import { AppBar, Box, InputBase, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  Avatar,
+  Badge,
+  Box,
+  InputBase,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import ForumSharpIcon from "@mui/icons-material/ForumSharp";
-import React from "react";
+import MailIcon from "@mui/icons-material/Mail";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import React, { useState } from "react";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -16,10 +28,25 @@ const Search = styled("div")(({ theme }) => ({
 }));
 
 const Icon = styled(Box)(({ theme }) => ({
-  backgroundColor: "white",
+  display: "none",
+  alignItems: "center",
+  gap: 20,
+  [theme.breakpoints.up("sm")]: {
+    display: "flex",
+  },
+}));
+
+const UserBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  gap: 10,
+  alignItems: "center",
+  [theme.breakpoints.up("sm")]: {
+    display: "none",
+  },
 }));
 
 const NavBar = () => {
+  const [open, setOpen] = useState(false);
   return (
     <AppBar position="sticky">
       <StyledToolbar
@@ -34,7 +61,45 @@ const NavBar = () => {
         <Search>
           <InputBase placeholder="search..." />
         </Search>
-        <Icon>Icons</Icon>
+        <Icon>
+          <Badge badgeContent={4} color="error">
+            <MailIcon />
+          </Badge>
+          <Badge badgeContent={2} color="error">
+            <NotificationsIcon />
+          </Badge>
+          <Avatar
+            sx={{ width: 30, height: 30 }}
+            src="https://mui.com/static/images/avatar/2.jpg"
+            onClick={(e) => setOpen(true)}
+          />
+        </Icon>
+        <UserBox>
+          <Avatar
+            sx={{ width: 30, height: 30 }}
+            src="https://mui.com/static/images/avatar/2.jpg"
+            onClick={(e) => setOpen(true)}
+          />
+          <Typography>John</Typography>
+        </UserBox>
+        <Menu
+          id="demo-positioned-menu"
+          aria-labelledby="demo-positioned-button"
+          open={open}
+          onClose={(e) => setOpen(false)}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          <MenuItem>Profile</MenuItem>
+          <MenuItem>My account</MenuItem>
+          <MenuItem>Logout</MenuItem>
+        </Menu>
       </StyledToolbar>
     </AppBar>
   );
